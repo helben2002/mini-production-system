@@ -18,7 +18,9 @@ pipeline {
     }
     post {
         always {
-            junit 'inventory-service/target/surfire-reports/*.xml'
+            dir('inventory-service') {
+                junit 'target/surfire-reports/TEST-*.xml'
+            }
         } 
     }
 }
