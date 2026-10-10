@@ -13,6 +13,11 @@ pipeline {
                     sh './mvnw clean verify'
                 }
             }
+            post {
+                always {
+                    junit 'inventory-service/target/surfire-reports/*.xml'
+                }
+            }
         }
     }
 }
