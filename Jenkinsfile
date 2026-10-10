@@ -19,8 +19,19 @@ pipeline {
     post {
         always {
             dir('inventory-service') {
-                junit 'target/surfire-reports/TEST-*.xml'
+                sh '''
+                    echo "Current directory:"
+                    pwd
+
+                    echo "JUnit XML files:"
+                    find target/surefire-reports -name 'TEST-*.xml'
+
+                    echo "File permissions:"
+                    ls -l target/surefire-reports/
+                '''
+
+                junit testResults: 'target/surefire-reports/TEST-*.xml'
             }
-        } 
+        }
     }
 }
