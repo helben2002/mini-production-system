@@ -11,13 +11,14 @@ pipeline {
                 dir('inventory-service') {
                     sh 'chmod +x mvnw'
                     sh './mvnw clean verify'
-                }
-            }
-            post {
-                always {
-                    junit 'inventory-service/target/surfire-reports/*.xml'
+                    sh 'ls -la target/surefire-reports/'
                 }
             }
         }
+    }
+    post {
+        always {
+            junit 'inventory-service/target/surfire-reports/*.xml'
+        } 
     }
 }
