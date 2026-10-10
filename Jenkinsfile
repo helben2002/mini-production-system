@@ -42,5 +42,23 @@ pipeline {
                 }
             }
         }
+        stage('Deploy Candidate & Health Check') {
+            agent { label 'windows && docker' }
+
+            steps {
+                bat '''
+                    docker rm -f inventory-candidate 2>NUL
+                    docker run -d --name inventory-candidate -p 8083:8081 inventory-service:1.0
+                '''
+
+                retry(10) {
+                    sleep time: 3, unit: 'SECONDS'
+
+                    bat '''
+                        curl.exe --fail --silent --show-error http://localhost:8083/actuator/health/readiness
+                    '''
+                }
+            }
+        }
     }
 }
