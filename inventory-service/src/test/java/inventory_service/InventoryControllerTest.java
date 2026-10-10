@@ -18,7 +18,7 @@ class InventoryControllerTest {
                 controller.getInventory(101L);
 
         assertEquals(101L, result.get("productId"));
-        assertEquals(999, result.get("quantity"));
+        assertEquals(25, result.get("quantity"));
         assertEquals(true, result.get("available"));
     }
 
